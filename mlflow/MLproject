@@ -1,0 +1,31 @@
+name: music_wizard
+
+python_env: python_env.yaml
+
+entry_points:
+  load_raw_data:
+    command: "python load_raw_data.py"
+
+  etl_data:
+    parameters:
+      music_csv: path
+      max_row_limit: {type: int, default: 10000}
+      features: {type: str, default: "releaseyear,key,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo"}
+      target_feature: {type: str, default: "score"}
+    command: "python etl_data.py --music-csv {music_csv} --max-row-limit {max_row_limit} --features {features} --target-feature {target_feature}"
+
+  train:
+    parameters:
+      processed_data: path
+      n_estimators: {type: int, default: 100}
+      learning_rate: {type: float, default: 0.1}
+    command: "python train.py --processed-data {processed_data} --n-estimators {n_estimators} --learning-rate {learning_rate}"
+
+  main:
+    parameters:
+      features: {type: str, default: "releaseyear,key,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo"}
+      target_feature: {type: str, default: "score"}
+      n_estimators: {type: int, default: 100}
+      learning_rate: {type: float, default: 0.1}
+      max_row_limit: {type: int, default: 10000}
+    command: "python main.py --features {features} --target-feature {target_feature} --n-estimators {n_estimators} --learning-rate {learning_rate} --max-row-limit {max_row_limit}"

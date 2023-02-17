@@ -1,0 +1,11 @@
+*__pycache__*
+*torecycle*
+*venv*
+*.pytest_cache*
+*.ipynb_checkpoints*
+*notebooks*
+*.idea*
+*scripts*
+*.DS_Store*
+/scripts/
+/mlruns/
